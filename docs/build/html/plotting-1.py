@@ -2,7 +2,7 @@ import plotly.express as px
 import pandas as pd
 
 # Load the Reviews.csv file
-data = pd.read_csv("C:/Users/sbtechnologies/PycharmProjects/pythonProject/Reviews.csv")
+data = pd.read_csv("Reviews.csv")
 filtered_data = []
 
 # This for loop is for removing all the special characters and prefix 'b' for all the words

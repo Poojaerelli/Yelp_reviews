@@ -220,6 +220,51 @@ First, we have to perform sentiment analysis as explained in the <a class="refer
 </div>
 <div class="section" id="creating-a-bubble-plot-using-plotly">
 <h2>Creating a bubble plot using plotly<a class="headerlink" href="#creating-a-bubble-plot-using-plotly" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Load the Reviews.csv file</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Reviews.csv&quot;</span><span class="p">)</span>
+<span class="n">filtered_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># This for loop is for removing all the special characters and prefix &#39;b&#39; for all the words</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;b&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">row</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+ <span class="n">filtered_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+ <span class="c1"># Saving filtered data into new column &#39;name&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_data</span>
+<span class="n">city</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">review_type</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">business_name</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Splitting data to get business_name, city_name as well as review type</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+ <span class="n">splt</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+ <span class="c1"># print(splt[2])</span>
+ <span class="n">business_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">splt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+ <span class="n">city</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">splt</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+ <span class="n">review_type</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">splt</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Saving business_name into new column &#39;business_name&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;business_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">business_name</span>
+<span class="c1"># Saving city into new column &#39;city&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">city</span>
+<span class="c1"># Saving review_type into new column &#39;review_type&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;review_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">review_type</span>
+
+<span class="c1"># Creating bubble plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_3d</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;business_name&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="s1">&#39;No.of reviews&#39;</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;review_type&#39;</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Yelp reviews&#39;</span><span class="p">,</span>
+                 <span class="n">size</span><span class="o">=</span><span class="s1">&#39;No.of reviews&#39;</span><span class="p">,</span> <span class="n">size_max</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;city&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
 <p>(<a class="reference external" href=".//plotting-1.py">Source code</a>, <a class="reference external" href=".//plotting-1.html">html</a>)</p>
 <iframe src="plotting-1.html" width="100%"
  height="500px" frameborder="0"></iframe><p>It’s done..</p>

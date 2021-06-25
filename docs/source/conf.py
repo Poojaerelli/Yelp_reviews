@@ -13,7 +13,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('C:/Users/sbtechnologies/pythonprojects/Yelp_reviews/yelpvenv/Lib/site-packages/sphinx_plotly_directive'))
-
+# sys.path.insert(0, os.path.abspath('C:/Users/sbtechnologies/pythonprojects/Yelp_reviews/yelpvenv/Lib/site-packages/sphinx_execute_code'))
 
 # -- Project information -----------------------------------------------------
 
@@ -31,7 +31,7 @@ release = '0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx_plotly_directive']
-
+#  'sphinx_execute_code'
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

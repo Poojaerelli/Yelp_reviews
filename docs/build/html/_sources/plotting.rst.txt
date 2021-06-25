@@ -64,12 +64,13 @@ Creating a bubble plot using plotly
 ------------------------------------
 
 .. plotly::
+   :include-source: True
 
    import plotly.express as px
    import pandas as pd
 
    # Load the Reviews.csv file
-   data = pd.read_csv("C:/Users/sbtechnologies/PycharmProjects/pythonProject/Reviews.csv")
+   data = pd.read_csv("Reviews.csv")
    filtered_data = []
 
    # This for loop is for removing all the special characters and prefix 'b' for all the words
@@ -108,7 +109,6 @@ Creating a bubble plot using plotly
    fig = px.scatter_3d(data, x='business_name', y='city', z='No.of reviews', hover_data=['review_type'], title='Yelp reviews',
                     size='No.of reviews', size_max=100, color='city')
    fig.show()
-
 
 It's done..
 
