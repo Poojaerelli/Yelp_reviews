@@ -28,7 +28,7 @@ python:
 dependencies:
   - sphinx
   - nbsphinx
+  - pillow==6.2.0
   - pip:
-    - pillow
     - sphinx_rtd_theme
     - sphinx_plotly_directive
