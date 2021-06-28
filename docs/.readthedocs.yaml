@@ -24,4 +24,8 @@ python:
         - docs
     - method: setuptools
       path: another/package
+<<<<<<< HEAD
   system_packages: true
+=======
+  system_packages: true
+>>>>>>> f4ff83eee505c5238daf7a2af01283eff42e014f
