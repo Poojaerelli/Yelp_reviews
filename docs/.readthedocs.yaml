@@ -18,17 +18,3 @@ python:
    version: 3.7
    install:
    - requirements: docs/requirements.txt
-   - method: pip
-      path: .
-      extra_requirements:
-        - docs
-    - method: setuptools
-      path: package
-
-dependencies:
-  - sphinx
-  - nbsphinx
-  - pillow==6.2.0
-  - pip:
-    - sphinx_rtd_theme
-    - sphinx_plotly_directive
