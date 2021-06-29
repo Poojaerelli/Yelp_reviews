@@ -169,20 +169,20 @@ So, let’s start..</p>
 First, we have to perform sentiment analysis as explained in the <a class="reference internal" href="sentiment_analysis.html#step"><span class="std std-ref">previous step</span></a> (upto step 6).</p>
 <dl class="simple">
 <dt>Then follow the below steps:</dt><dd><ol class="arabic simple">
-<li><p>Save the required data into csv file</p></li>
-<li><p>Create bubble plot using plotly</p></li>
+<li><p><a class="reference internal" href="#step1"><span class="std std-ref">Save the required data into csv file</span></a></p></li>
+<li><p><a class="reference internal" href="#step2"><span class="std std-ref">Create bubble plot using plotly</span></a></p></li>
 </ol>
 </dd>
 </dl>
 <div class="section" id="save-the-required-data-into-csv-file">
-<h2>Save the required data into csv file<a class="headerlink" href="#save-the-required-data-into-csv-file" title="Permalink to this headline">¶</a></h2>
+<span id="step1"></span><h2>Save the required data into csv file<a class="headerlink" href="#save-the-required-data-into-csv-file" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">business_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;path for yelp_academic_dataset_business.csv&quot;</span><span class="p">)</span>
 <span class="n">file1</span> <span class="o">=</span> <span class="n">business_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5000</span><span class="p">]</span>
 
 <span class="n">review_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;path for yelp_academic_dataset_review.csv&quot;</span><span class="p">)</span>
 <span class="n">file2</span> <span class="o">=</span> <span class="n">review_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5000</span><span class="p">]</span>
 
-<span class="n">total_reviews</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">reviews</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">filtered_reviews</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">file1</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
@@ -192,7 +192,7 @@ First, we have to perform sentiment analysis as explained in the <a class="refer
          <span class="n">cty</span> <span class="o">=</span> <span class="n">file1</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
          <span class="n">business_name</span> <span class="o">=</span> <span class="n">file1</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
          <span class="n">t</span> <span class="o">=</span> <span class="n">file2</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-         <span class="n">c_t</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">t</span><span class="p">])</span>
+         <span class="n">c_t</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">t</span><span class="p">])</span>
          <span class="n">predict</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">c_t</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
          <span class="c1"># saving business_name and city_name</span>
          <span class="k">if</span> <span class="n">predict</span> <span class="o">==</span> <span class="mf">5.0</span><span class="p">:</span>
@@ -219,7 +219,7 @@ First, we have to perform sentiment analysis as explained in the <a class="refer
 <p>Then in the second for loop, checking for the repetition of review is done, if the review is not repetitive it will be saved into filtered_reviews variable. Each business and city may have many number of reviews, but only No.of revirews more than 5 are selected here for plotting.</p>
 </div>
 <div class="section" id="creating-a-bubble-plot-using-plotly">
-<h2>Creating a bubble plot using plotly<a class="headerlink" href="#creating-a-bubble-plot-using-plotly" title="Permalink to this headline">¶</a></h2>
+<span id="step2"></span><h2>Creating a bubble plot using plotly<a class="headerlink" href="#creating-a-bubble-plot-using-plotly" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 

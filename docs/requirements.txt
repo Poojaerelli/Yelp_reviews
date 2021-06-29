@@ -1,0 +1,2 @@
+sphinx_plotly_directive
+pillow==6.2.0

@@ -8,8 +8,10 @@ Here, plotting is done for three attributes i.e., business_name, city_name and N
 First, we have to perform sentiment analysis as explained in the :ref:`previous step <step>` (upto step 6).
 
 Then follow the below steps:
- 1. Save the required data into csv file
- 2. Create bubble plot using plotly
+ 1. :ref:`Save the required data into csv file <step1>`
+ 2. :ref:`Create bubble plot using plotly <step2>`
+
+.. _step1:
 
 Save the required data into csv file
 -------------------------------------
@@ -22,7 +24,7 @@ Save the required data into csv file
    review_dataset = pd.read_csv("path for yelp_academic_dataset_review.csv")
    file2 = review_dataset[0:5000]
 
-   total_reviews = []
+   reviews = []
    filtered_reviews = []
 
    for idx in file1.iterrows():
@@ -32,7 +34,7 @@ Save the required data into csv file
             cty = file1['city'][i]
             business_name = file1['name'][i]
             t = file2['text'][i]
-            c_t = vocab.transform([t])
+            c_t = vectorizer.transform([t])
             predict = model.predict(c_t)[0]
             # saving business_name and city_name
             if predict == 5.0:
@@ -59,6 +61,8 @@ Here, in the first for loop, iterrows() function is used to get business data al
 
 Then in the second for loop, checking for the repetition of review is done, if the review is not repetitive it will be saved into filtered_reviews variable. Each business and city may have many number of reviews, but only No.of revirews more than 5 are selected here for plotting.
 
+
+.. _step2:
 
 Creating a bubble plot using plotly
 ------------------------------------

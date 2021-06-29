@@ -21,6 +21,7 @@ This can be done in 7 steps:
 
 .. code-block:: python
    
+   import csv
    import string
    import pandas as pd
    import numpy as np
@@ -41,8 +42,8 @@ This can be done in 7 steps:
 
 .. code-block:: python
 
-   data = pd.read_csv("path for yelp_academic_dataset_review.csv")
-   print(df.head())
+   DATA = pd.read_csv("path for yelp_academic_dataset_review.csv")
+   print(DATA.head())
 
 It will print the following output.
 
@@ -57,12 +58,14 @@ It will print the following output.
 
 .. code-block:: python
    
-   data_classes = data[(data['stars'] == 1) | (data['stars'] == 5)] #Selecting only two types of reviews, 1 for negative review and 5 for positive review
+   filtered_data = DATA[(DATA['stars'] == 1) | (DATA['stars'] == 5)] # Selecting only two types of reviews, 1 for negative review and 5 for positive review
 
-   def text_process(text):
-    nopunc = [char for char in text if char not in string.punctuation]
-    nopunc = ''.join(nopunc)
-    return [word for word in nopunc.split() if word.lower() not in stopwords.words('english')]
+   def preprocess(review_text):
+    remove_pctn = [char for char in review_text if char not in string.punctuation]
+    remove_pctn = ''.join(remove_pctn)
+    lwr = [word.lower() for word in remove_pctn.split()]
+    final_word = [word for word in lwr if word not in stopwords.words('english')]
+    return final_word
 
 This step will remove all the stopwords, numbers and punctuation marks.
 
@@ -73,11 +76,11 @@ This step will remove all the stopwords, numbers and punctuation marks.
 
 .. code-block:: python
    
-   x = data_classes['text']
-   y = data_classes['stars']
-   vocab = CountVectorizer(analyzer=text_process).fit(x)
-   print('vocab_len', len(vocab.vocabulary_))
-   x = vocab.transform(x)
+   x = filtered_data['text']
+   y = filtered_data['stars']
+   vectorizer = CountVectorizer(analyzer=preprocess).fit(x)
+   print('vectorizer_len', len(vectorizer.vocabulary_))
+   x = vectorizer.transform(x)
    print('x', x)
 
 This will print the output like this.
@@ -106,8 +109,8 @@ This step will divide the dataset into train and test sets.
    
    model = MLPClassifier()
    model.fit(X_train, y_train)
-   y_hat = model.predict(X_test)
-   print('predict', len(y_hat))
+   y_predict = model.predict(X_test)
+   print('predictions', len(y_predict))
 
 This step will train the model and prints length of prediction. You can use any of other models from sklearn, MLPClassifier() model gives best accuracy for this dataset. 
 
@@ -118,22 +121,24 @@ This step will train the model and prints length of prediction. You can use any 
 
 .. code-block:: python
    
-   def evaluation(y, y_hat, classes, title='Confusion_Matrix'):
-    cm = confusion_matrix(y, y_hat)
-    report = classification_report(y, y_hat)
-    tick_marks = np.arange(len(classes))
-    print("Score:", round(accuracy_score(y_test, y_hat) * 100, 2))
-    print('report', report)
-    sns.heatmap(cm, cmap='PuBu', annot=True, fmt='g', annot_kws={'size': 20})
-    plt.xticks(tick_marks, classes)
-    plt.yticks(tick_marks, classes)
-    plt.xlabel('predicted', fontsize=18)
-    plt.ylabel('actual', fontsize=18)
-    plt.title(title, fontsize=18)
+   def conf_matrix(y, y_predict, reviews, title='Confusion_Matrix'):
+    c_matrix = confusion_matrix(y, y_predict)
+    clsfn_report = classification_report(y, y_predict)
+    ticks = np.arange(len(reviews))
+    score = accuracy_score(y_test, y_predict)
+    score = round(score * 100, 2)
+    print("Accuracy_score:", score)
+    print('classification_report', clsfn_report)
+    sns.heatmap(c_matrix, cmap='PuBu', annot=True, fmt='g', annot_kws={'size': 20})
+    plt.xticks(ticks, reviews)
+    plt.yticks(ticks, reviews)
+    plt.xlabel('predicted', fontsize=20)
+    plt.ylabel('actual', fontsize=20)
+    plt.title(title, fontsize=20)
     plt.show()
 
 
-   evaluation(y_test, y_hat, classes=['negative(1)', 'positive(5)'])
+   conf_matrix(y_test, y_predict, reviews=['negative(1)', 'positive(5)'])
 
 This will show output as below.
 
@@ -157,6 +162,7 @@ Combining all the above steps, entire code will look like this,
 
 .. code-block:: python
 
+   import csv
    import string
    import pandas as pd
    import numpy as np
@@ -170,44 +176,48 @@ Combining all the above steps, entire code will look like this,
    from sklearn.neural_network import MLPClassifier
 
 
-   def text_process(text):
-    nopunc = [char for char in text if char not in string.punctuation]
-    nopunc = ''.join(nopunc)
-    return [word for word in nopunc.split() if word.lower() not in stopwords.words('english')]
+   def preprocess(review_text):
+    remove_pctn = [char for char in review_text if char not in string.punctuation]
+    remove_pctn = ''.join(remove_pctn)
+    lwr = [word.lower() for word in remove_pctn.split()]
+    final_word = [word for word in lwr if word not in stopwords.words('english')]
+    return final_word
 
 
    DATA = pd.read_csv("path for yelp_academic_dataset_review.csv")
    data = DATA[0:5000]
 
-   data_classes = data[(data['stars'] == 1) | (data['stars'] == 5)]
-   x = data_classes['text']
-   y = data_classes['stars']
-   vocab = CountVectorizer(analyzer=text_process).fit(x)
-   x = vocab.transform(x)
+   filtered_data = data[(data['stars'] == 1) | (data['stars'] == 5)]
+   x = filtered_data['text']
+   y = filtered_data['stars']
+   vectorizer = CountVectorizer(analyzer=preprocess).fit(x)
+   x = vectorizer.transform(x)
    X_train, X_test, y_train, y_test = train_test_split(x, y, random_state=42)
 
    model = MLPClassifier()
    model.fit(X_train, y_train)
-   y_hat = model.predict(X_test)
-   print('predict', len(y_hat))
+   y_predict = model.predict(X_test)
+   print('predictions', len(y_predict))
 
 
-   def evaluation(y, y_hat, classes, title='Confusion_Matrix'):
-    cm = confusion_matrix(y, y_hat)
-    report = classification_report(y, y_hat)
-    tick_marks = np.arange(len(classes))
-    print("Score:", round(accuracy_score(y_test, y_hat) * 100, 2))
-    print('report', report)
-    sns.heatmap(cm, cmap='PuBu', annot=True, fmt='g', annot_kws={'size': 20})
-    plt.xticks(tick_marks, classes)
-    plt.yticks(tick_marks, classes)
-    plt.xlabel('predicted', fontsize=18)
-    plt.ylabel('actual', fontsize=18)
-    plt.title(title, fontsize=18)
+   def conf_matrix(y, y_predict, reviews, title='Confusion_Matrix'):
+    c_matrix = confusion_matrix(y, y_predict)
+    clsfn_report = classification_report(y, y_predict)
+    ticks = np.arange(len(reviews))
+    score = accuracy_score(y_test, y_predict)
+    score = round(score * 100, 2)
+    print("Accuracy_score:", score)
+    print('classification_report', clsfn_report)
+    sns.heatmap(c_matrix, cmap='PuBu', annot=True, fmt='g', annot_kws={'size': 20})
+    plt.xticks(ticks, reviews)
+    plt.yticks(ticks, reviews)
+    plt.xlabel('predicted', fontsize=20)
+    plt.ylabel('actual', fontsize=20)
+    plt.title(title, fontsize=20)
     plt.show()
 
 
-   evaluation(y_test, y_hat, classes=['negative(1)', 'positive(5)'])
+   conf_matrix(y_test, y_predict, reviews=['negative(1)', 'positive(5)'])
 
 
 In this step, sentiment analysis is performed by selecting only 5000 reviews (for reference) from the entire dataset, and the output is as below.
