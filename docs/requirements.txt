@@ -1,7 +1,2 @@
-<<<<<<< HEAD
 sphinx_plotly_directive
 pillow==6.2.0
-=======
-sphinx_plotly_directive
-pillow==6.2.0
->>>>>>> 90fbe2b5aed9ecf215382dca79d4d7fcf8216415
