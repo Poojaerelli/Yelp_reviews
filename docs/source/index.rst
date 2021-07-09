@@ -15,3 +15,4 @@ Here, you will be going through the following steps:
 
    sentiment_analysis.rst
    plotting.rst
+   contextual_analysis.rst
