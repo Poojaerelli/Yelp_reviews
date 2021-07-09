@@ -8,4 +8,4 @@ After you complete the documentation part, you have to visit readthedocs.org to 
 4. If you can see your github repository there, click on **+** and start **Build version**.
 5. If you can't see your repository, click on **Import manually** and follow the steps. Then start **Build version**.
 6. After completing the build, click on **View Docs** located at the upper right of the page.
-7. There you can see your final documentation like this https://yelp-reviews.readthedocs.io/en/latest/index.html#.
+7. There you can see your final documentation like this https://yelp-reviews.readthedocs.io/en/latest/index.html.
