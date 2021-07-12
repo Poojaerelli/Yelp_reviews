@@ -1,10 +1,10 @@
 Performing contextual analysis
 ==============================
 
-In this step, contextual analysis is performed on yelp reviews dataset. Actually what is it...?
-Performing sentiment analysis will let you know whether a particular text is giving positive or negative review but we don't know why poeple are giving such reviews and why they are feeling in that way. So, here **contextual analysis** will help you to know the reason behind each review.
+In this step, contextual analysis is performed on the yelp reviews dataset. Actually, what is it...?
+Performing sentiment analysis will let you know whether a particular text is giving positive or negative review, but we don't know why people are giving such reviews and why they are feeling in that way. So, here **contextual analysis** will help you to know the reason behind each review.
 
-Here, contextual analysis is performed on reviews of different restaurant's in the yelp business dataset. For doing this, restaurants name from the business dataset and their respective review text from the review dataset are required.
+Here, contextual analysis is performed on reviews of different restaurants in the yelp business dataset. For doing this, restaurants name from the business dataset and their respective review text from the review dataset are required.
 
 This can be done in following steps:
  1. :ref:`merging business and review datasets <st1>`
@@ -21,9 +21,9 @@ Merging of both the datasets can be done as follows:
 * Dropping out unwanted columns from the datasets.
 * Select the required categories.
 * Merge the datasets into a dataframe as chunks. To avoid heavy load on memory, data is merged as chunks of 500000 reviews at a time.
-* Finally save the data as a csv file.
+* Finally save the data as a CSV file.
 
-Now, let's code for this..
+Now, let's code for this...
 
 .. code-block:: python
    
@@ -38,7 +38,7 @@ Now, let's code for this..
    columns_to_drop = ['hours', 'is_open', 'review_count', 'longitude', 'postal_code', 'latitude', 'attributes']
    b_data = b_data.drop(columns_to_drop, axis=1)
 
-   # selecting only restaurants categories. Any of the required categories can be selected
+   # selecting only restaurant categories. Any of the required categories can be selected
    business_data = b_data[b_data['categories'].str.contains('Restaurants', case=False, na=False)]
 
    chunk_size = 500000
@@ -56,13 +56,13 @@ Now, let's code for this..
    csv_name = "yelp_reviews_Restaurants_categories.csv"
    final_dataset.to_csv(csv_name, index=False) # writing the merged data into csv file
 
-Cool!.. merging is done. Now, let's go for the actual task.
+Cool!.. Merging is done. Now, let's go for the actual task.
 
 .. _st2:
 
-**2. Performing contextual analysis on merged data:**
+**2. performing contextual analysis on merged data:**
 
-This process is somewhat similar to sentiment analysis except saving the positive and negative review texts into seperate files. So, let's dive into coding directly..
+This process is somewhat similar to sentiment analysis except saving the positive and negative review texts into separate files. So, let's dive into coding directly...
 
 .. code-block:: python
 
@@ -163,16 +163,16 @@ This process is somewhat similar to sentiment analysis except saving the positiv
 
    newfile1.close()
 
-In the above code, after training the model each review text is saved into seperate pos_comments and neg_comments lists. Then each review text from pos_comment list is tokenized and divided into bigrams to extract the adjectives by applying pos-tagging.
-Those adjectives are saved into a csv file using dictwriter function. Same thing is done for neg_comments list also. After completing this step, you will be having two csv files for positive and negative comments.
+In the above code, after training the model each review text is saved into separate pos_comments and neg_comments lists. Then each review text from pos_comment list is tokenized and divided into bigrams to extract the adjectives by applying pos-tagging.
+Those adjectives are saved into a CSV file using dictwriter function. Same thing is done for neg_comments list also. After completing this step, you will be having two CSV files for positive and negative comments.
 
 .. _st3:
 
-**3. Plotting positive and negative contextual words using wordcloud:**
+**3. plotting positive and negative contextual words using wordcloud:**
 
 Wordcloud can be used to display the words in a sentence based on it's frequency. Frequency defines how many times the word is repeated. More the frequency, more the size of the word.
 
-Let's code for this..
+Let's code for this...
 
 **Plotting positive comments:**
 
