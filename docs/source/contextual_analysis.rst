@@ -13,7 +13,7 @@ This can be done in following steps:
 
 .. _st1:
 
-**1. merging yelp business and review datasets:**
+**1. Merging yelp business and review datasets**
 
 Merging of both the datasets can be done as follows: 
 
@@ -60,7 +60,7 @@ Cool!.. Merging is done. Now, let's go for the actual task.
 
 .. _st2:
 
-**2. performing contextual analysis on merged data:**
+**2. Performing contextual analysis on merged data**
 
 This process is somewhat similar to sentiment analysis except saving the positive and negative review texts into separate files. So, let's dive into coding directly...
 
@@ -168,7 +168,7 @@ Those adjectives are saved into a CSV file using dictwriter function. Same thing
 
 .. _st3:
 
-**3. plotting positive and negative contextual words using wordcloud:**
+**3. Plotting positive and negative contextual words using wordcloud**
 
 Wordcloud can be used to display the words in a sentence based on it's frequency. Frequency defines how many times the word is repeated. More the frequency, more the size of the word.
 

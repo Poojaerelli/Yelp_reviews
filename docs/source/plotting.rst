@@ -13,8 +13,7 @@ Then follow the below steps:
 
 .. _step1:
 
-Save the required data into csv file
--------------------------------------
+**1. Save the required data into csv file**
 
 .. code-block:: python
 
@@ -64,8 +63,7 @@ Then in the second for loop, checking for the repetition of review is done, if t
 
 .. _step2:
 
-Creating a bubble plot using plotly
-------------------------------------
+**2. Creating a bubble plot using plotly**
 
 .. plotly::
    :include-source: True
