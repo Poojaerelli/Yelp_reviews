@@ -2,7 +2,7 @@ Plotting the output
 ====================
 
 In the first step, reviews of yelp dataset are shown using confusion matrix. Now, in this step, all the reviews will be plotted as a bubble plot using plotly library of python.
-So, let's start..
+So, let's start...
 
 Here, plotting is done for three attributes i.e., business_name, city_name and No.of reviews for a particular business in particular city. For that we need to save business_name, city_name and No.of reviews after predicting.
 First, we have to perform sentiment analysis as explained in the :ref:`previous step <step>` (upto step 6).
@@ -114,6 +114,4 @@ Creating a bubble plot using plotly
                     size='No.of reviews', size_max=100, color='city')
    fig.show()
 
-It's done..
-
-Thanks for reading.. 
+It's done...

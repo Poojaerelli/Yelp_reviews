@@ -220,6 +220,6 @@ This will give you the output as below,
 .. figure:: /images/negative.png
    :align: center
 
-It's done..
+It's done...
 
-Thanks for reading..
+Thanks for reading...
