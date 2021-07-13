@@ -158,8 +158,7 @@ This process is somewhat similar to sentiment analysis except saving the positiv
             tags = nltk.pos_tag(gram)
             for tag in tags:
                 if tag[1] == 'JJ':
-                    if tag[0] != 'good':
-                        dictwriter1.writerow({'business_name': row[0], 'negative_comment': tag[0]})
+                    dictwriter1.writerow({'business_name': row[0], 'negative_comment': tag[0]})
 
    newfile1.close()
 
